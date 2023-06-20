@@ -13,8 +13,8 @@ Alice's public key and Bob's private key will compute the same shared secret as
 Bob's public key and Alice's private key.
 
 ```dart
-    BigInt alice_secret = M511.randomBigInt(4096);
-    BigInt bob_secret = M511.randomBigInt(4096);
+    BigInt alice_secret = SecurityUtils.randomBigInt(4096);
+    BigInt bob_secret = SecurityUtils.randomBigInt(4096);
 
     EllipticCurvePoint alicePublicKey = M511.multiply(M511.secureBasePoint, alice_secret);
     EllipticCurvePoint bobPublicKey = M511.multiply(M511.secureBasePoint, bob_secret);
@@ -37,7 +37,7 @@ Technically, ChaCha20 produces a bunch of deterministic "random number" from an 
 encrypts/decrypts the input by XOR-ing its bytes with the ChaCha20 bytes
 
 ```dart
-    BigInt password = M511.randomBigInt(256);
+    BigInt password = SecurityUtils.randomBigInt(256);
     String uuid = Uuid().v1();
     Uint8List bytes = Uint8List.fromList("SOME TEXT YOU WANT TO ENCRYPT".codeUnits.toList());
     Uint8List output = ChaCha20.XORAndChaCha(
