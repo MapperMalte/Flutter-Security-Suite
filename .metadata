@@ -1,0 +1,10 @@
+# This secure_data tracks properties of this Flutter project.
+# Used by Flutter tool to assess capabilities and perform upgrades etc.
+#
+# This secure_data should be version controlled and should not be manually edited.
+
+version:
+  revision: b8f7f1f9869bb2d116aa6a70dbeac61000b52849
+  channel: stable
+
+project_type: package
