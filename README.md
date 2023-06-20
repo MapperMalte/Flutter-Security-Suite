@@ -1,5 +1,3 @@
-<!--
-
 ChaCha20 is a fast encryption algorithm.
 M-511 is a very good elliptic curve for Elliptic Key Diffie Hellman.
 
