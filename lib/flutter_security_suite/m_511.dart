@@ -19,20 +19,6 @@ class M511
   static final BigInt A = BigInt.from(530438);
   static final BigInt three = BigInt.from(3);
 
-  static BigInt randomBigInt(int bitLength) {
-    final random = Random.secure();
-    final hexDigitCount = (bitLength / 4).ceil(); // Each hex digit represents 4 bits
-    final buffer = StringBuffer();
-
-    while (buffer.length < hexDigitCount) {
-      buffer.write(random.nextInt(16).toRadixString(16));
-    }
-
-    // Add leading zeros if necessary to reach the desired bit length
-    final hexString = buffer.toString().padLeft(hexDigitCount, '0');
-    return BigInt.parse(hexString, radix: 16);
-  }
-
   static EllipticCurvePoint multiply(EllipticCurvePoint ellipticCurvePoint, BigInt n)
   {
     BigInt done_additions = BigInt.zero;

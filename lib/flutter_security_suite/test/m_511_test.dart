@@ -1,22 +1,23 @@
+import 'package:chat_security/flutter_security_suite/security_utils.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../m_511.dart';
 
 void main() {
   test('A random BigInt has expected amount of bits', () {
-    expect(M511.randomBigInt(4096).bitLength, 4096);
+    expect(SecurityUtils.randomBigInt(4096).bitLength, 4096);
   });
 
   test('Two random Big Ints are different', () {
-    BigInt alice_secret = M511.randomBigInt(4096);
-    BigInt bob_secret = M511.randomBigInt(4096);
+    BigInt alice_secret = SecurityUtils.randomBigInt(4096);
+    BigInt bob_secret = SecurityUtils.randomBigInt(4096);
 
     expect(alice_secret, isNot(bob_secret));
   });
 
   test('Alice and Bob have different public keys', () {
-    BigInt alice_secret = M511.randomBigInt(4096);
-    BigInt bob_secret = M511.randomBigInt(4096);
+    BigInt alice_secret = SecurityUtils.randomBigInt(4096);
+    BigInt bob_secret = SecurityUtils.randomBigInt(4096);
 
     EllipticCurvePoint alicePublicKey = M511.multiply(M511.secureBasePoint, alice_secret);
     EllipticCurvePoint bobPublicKey = M511.multiply(M511.secureBasePoint, bob_secret);
@@ -26,8 +27,8 @@ void main() {
   });
 
   test('Alice and Bob compute the same secret', () {
-    BigInt alice_secret = M511.randomBigInt(4096);
-    BigInt bob_secret = M511.randomBigInt(4096);
+    BigInt alice_secret = SecurityUtils.randomBigInt(4096);
+    BigInt bob_secret = SecurityUtils.randomBigInt(4096);
 
     print("ALICE RANDOM NUMBER: "+alice_secret.toString());
     print("BOB RANDOM NUMBER: "+bob_secret.toString());

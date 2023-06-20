@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:chat_security/flutter_security_suite/security_utils.dart';
 import 'package:crypto/crypto.dart';
 
 
@@ -53,12 +54,11 @@ class ChaCha20
   /// you can ensure this.
   static Uint8List XORAndChaCha(Uint8List inputBytes, BigInt password, String uuidForNonce)
   {
-
     ChaCha20 chaCha20 = ChaCha20(
         ChaCha20.makeChaChaState(
-            ChaCha20.convertBigIntToUint32List(password),
+            SecurityUtils.convertBigIntToUint32List(password),
             0,
-            ChaCha20.convertToNonce(uuidForNonce)
+            SecurityUtils.convertToNonce(uuidForNonce)
         )
     );
 
@@ -84,55 +84,6 @@ class ChaCha20
   ];
   Uint32List cha_cha_state;
 
-  static int _concatFourBytesToInt32(int b3, int b2, int b1, int b0) {
-    final int8List = new Int8List(4)
-      ..[3] = b3
-      ..[2] = b2
-      ..[1] = b1
-      ..[0] = b0;
-    return int8List.buffer.asByteData().getInt32(0);
-  }
-
-  static Uint32List convertToNonce(String uuid)
-  {
-    Uint32List nonce = new Uint32List(3);
-    List<int> hashed_uuid_bytes = sha256.convert(uuid.codeUnits).bytes;
-    for(int i = 0; i < nonce.length; i++)
-    {
-      nonce[i] = (_concatFourBytesToInt32(
-          hashed_uuid_bytes[0+i*4],
-          hashed_uuid_bytes[1+i*4],
-          hashed_uuid_bytes[2+i*4],
-          hashed_uuid_bytes[3+i*4]
-      ));
-    }
-    return nonce;
-  }
-
-  static Uint32List convertBigIntToUint32List(BigInt number) {
-    final byteData = ByteData(4);
-
-    final byteCount = (number.bitLength + 31) ~/ 32;
-    final uint32List = Uint32List(byteCount);
-
-    for (var i = 0; i < byteCount; i++) {
-      byteData.setUint32(0, number.toUnsigned(32).toInt());
-      uint32List[i] = byteData.getUint32(0);
-      number = number >> 32;
-    }
-
-    return uint32List;
-  }
-
-  static BigInt convertUint32ListToBigInt(Uint32List uint32List) {
-    BigInt number = BigInt.zero;
-
-    for (var i = uint32List.length - 1; i >= 0; i--) {
-      number = (number << 32) + BigInt.from(uint32List[i]);
-    }
-
-    return number;
-  }
 
   static Uint32List makeChaChaState(Uint32List key, int blockCounter, Uint32List nonce)
   {

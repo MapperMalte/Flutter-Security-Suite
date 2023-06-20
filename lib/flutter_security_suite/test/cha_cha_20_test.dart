@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:chat_security/flutter_security_suite/m_511.dart';
+import 'package:chat_security/flutter_security_suite/security_utils.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:math' as Math;
@@ -61,9 +62,9 @@ void main() {
   }
 
   test('BigInt to Uint32List and back to BigInt restores the original BigInt', () {
-    BigInt randomInt = M511.randomBigInt(512);
-    Uint32List uint32list = ChaCha20.convertBigIntToUint32List(randomInt);
-    BigInt restoredInt = ChaCha20.convertUint32ListToBigInt(uint32list);
+    BigInt randomInt = SecurityUtils.randomBigInt(512);
+    Uint32List uint32list = SecurityUtils.convertBigIntToUint32List(randomInt);
+    BigInt restoredInt = SecurityUtils.convertUint32ListToBigInt(uint32list);
     expect(randomInt, restoredInt);
   });
 
@@ -76,7 +77,7 @@ void main() {
   });
 
   test('ChaCha20 XOR encrypts a low-entropy-string to a high-entropy-string', (){
-    BigInt password = M511.randomBigInt(256);
+    BigInt password = SecurityUtils.randomBigInt(256);
     String uuid = Uuid().v1();
 
     String aBunchOfAs = "";
