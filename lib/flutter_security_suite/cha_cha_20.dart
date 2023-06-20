@@ -53,7 +53,6 @@ class ChaCha20
   /// you can ensure this.
   static Uint8List XORAndChaCha(Uint8List inputBytes, BigInt password, String uuidForNonce)
   {
-    assert(password.bitLength == 256);
 
     ChaCha20 chaCha20 = ChaCha20(
         ChaCha20.makeChaChaState(
@@ -72,6 +71,7 @@ class ChaCha20
       if ( j%64 == 0 )
       {
         chaCha20.cha_cha_20();
+        nextChaChaBytes = chaCha20.cha_cha_state.buffer.asUint8List();
       }
     }
 
